@@ -1,6 +1,7 @@
 export PATH=/opt/SeqTools/bin/samtools-1.3:$PATH # samtools
 export PATH=/opt/SeqTools/bin/samtools-1.3/htslib-1.3:$PATH  # tabix and bgzip
 export PATH=/opt/SeqTools/bin/bwa-0.7.15:$PATH  # bwa
+export PATH=/opt/SeqTools/bin/bowtie2-2.2.9/:$PATH # bowtie2
 export PICARD_PATH=/opt/SeqTools/bin/picard-tools-1.141
 
 ################
@@ -78,6 +79,10 @@ awk '$1=="chr1"'  ~/igenomes/Homo_sapiens/UCSC/hg38/Annotation/Genes/genes.gtf >
 java -Xmx10g -jar $PICARD_PATH/picard.jar CreateSequenceDictionary R=chr1.fa O=chr1.dict
 ## Create .fai index file
 samtools faidx chr1.fa
+
+## bowtie2 index
+bowtie2-build chr1.fa genome
+
 ## Create dbsnp vcf (& tbi index) files from chromosome 1 only
 curl -L -O $URL_DBSNP # 1GB, slow
 curl -L -O $URL_DBSNP.tbi
