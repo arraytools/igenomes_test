@@ -21,6 +21,10 @@ awk '$1=="1"'  ~/igenomes/Homo_sapiens/Ensembl/GRCh37/Annotation/Genes/genes.gtf
 java -Xmx10g -jar $PICARD_PATH/picard.jar CreateSequenceDictionary R=1.fa O=1.dict
 ## Create .fai index file
 samtools faidx 1.fa
+
+## bowtie2 index
+bowtie2-build 1.fa genome
+
 ## Create dbsnp vcf (& tbi index) files from chromosome 1 only
 curl -L -O $URL_DBSNP # 1GB, slow, same as UCSC hg38
 curl -L -O $URL_DBSNP.tbi
@@ -50,6 +54,10 @@ awk '$1=="chr1"'  ~/igenomes/Homo_sapiens/NCBI/GRCh38/Annotation/Genes/genes.gtf
 java -Xmx10g -jar $PICARD_PATH/picard.jar CreateSequenceDictionary R=chr1.fa O=chr1.dict
 ## Create .fai index file
 samtools faidx chr1.fa
+
+## bowtie2 index
+bowtie2-build chr1.fa genome
+
 ## Create dbsnp vcf (& tbi index) files from chromosome 1 only
 curl -L -O $URL_DBSNP # 1GB, slow, same as UCSC hg38
 curl -L -O $URL_DBSNP.tbi
